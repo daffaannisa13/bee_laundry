@@ -4,6 +4,7 @@
 @section('body-class', 'dashboard-layout')
 
 @section('content')
+<div class="items-page">
 <div class="main-content">
     <!-- Breadcrumb -->
     <div class="breadcrumb">
@@ -52,6 +53,7 @@
             <div id="items-lottie-show"></div>
         </div>
     </div>
+</div>
 </div>
 
 <!-- Lottie JS -->

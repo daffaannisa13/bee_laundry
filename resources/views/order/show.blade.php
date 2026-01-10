@@ -4,7 +4,7 @@
 @section('body-class', 'dashboard-layout')
 
 @section('content')
-<div class="main-content">
+<div class="main-content orders-show">
     <!-- Breadcrumb -->
     <div class="breadcrumb">
         <a href="{{ route('order.index') }}">Orders</a> / <span>Order Detail</span>
@@ -75,7 +75,7 @@
                 <h3>Summary</h3>
                 <div class="summary-item">
                     <strong>Status:</strong>
-                    <span class="status 
+                    <span class="status
                         {{ $pesanan->status == 'done' ? 'completed' : ($pesanan->status == 'processing' ? 'processing' : 'pending') }}">
                         {{ ucfirst($pesanan->status) }}
                     </span>
@@ -92,7 +92,7 @@
                 @if($pesanan->pembayaran)
                     <div class="payment-item" style="margin-bottom:5px;">
                         <strong>Status:</strong>
-                        <span class="status 
+                        <span class="status
                             {{ $pesanan->pembayaran->status == 'paid' ? 'completed' : ($pesanan->pembayaran->status == 'pending' ? 'pending' : 'processing') }}">
                             {{ ucfirst($pesanan->pembayaran->status) }}
                         </span>
@@ -112,7 +112,7 @@
                     </div>
                 @endif
 
-                
+
             <div class="form-actions">
                 <a href="{{ route('order.index') }}" class="btn-add">
                     <i class="fa-solid fa-arrow-left"></i> Back

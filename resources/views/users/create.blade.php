@@ -4,6 +4,7 @@
 @section('body-class', 'dashboard-layout')
 
 @section('content')
+<div class="creates-page">
 <div class="main-content">
   <!-- Breadcrumb -->
   <div class="breadcrumb">
@@ -71,6 +72,7 @@
       <div id="laundry-lottie"></div>
     </div>
   </div>
+</div>
 </div>
 
 <!-- JS Libraries -->

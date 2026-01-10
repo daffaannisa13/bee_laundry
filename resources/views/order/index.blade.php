@@ -6,6 +6,7 @@
 @section('content')
 <meta name="csrf-token" content="{{ csrf_token() }}">
 
+<div class="orders-page">
 <div class="main-content">
   <div class="header">Order</div>
 
@@ -57,7 +58,7 @@
 
           <span>{{ $p->created_at->format('M d, Y') }}</span>
           <span>
-            <span class="status 
+            <span class="status
               {{ $p->status == 'done' ? 'completed' : ($p->status == 'processing' ? 'processing' : 'pending') }}">
               {{ ucfirst($p->status) }}
             </span>
@@ -103,6 +104,7 @@
     </div>
   </div>
 </div>
+</div>
 
 <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
 
@@ -120,7 +122,7 @@ $(document).ready(function(){
             }
         });
   }
-  
+
 
   // Live search
   $("#searchOrder").on("keyup", function(){

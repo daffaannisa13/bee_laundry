@@ -4,6 +4,7 @@
 @section('body-class', 'dashboard-layout')
 
 @section('content')
+<div class="edits-page">
 <div class="main-content">
   <!-- Breadcrumb -->
   <div class="breadcrumb">
@@ -67,6 +68,7 @@
       <div id="users-lottie"></div>
     </div>
   </div>
+</div>
 </div>
 
 <!-- JS Libraries -->

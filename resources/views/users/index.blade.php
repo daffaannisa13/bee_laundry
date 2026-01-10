@@ -3,6 +3,7 @@
 @section('title', 'User Management')
 
 @section('content')
+<div class="users-page">
 <div class="main-content">
     <div class="header">User Management</div>
 
@@ -39,30 +40,30 @@
                     <span>{{ $user->email }}</span>
                     <span>{{ $user->role }}</span>
                     <span class="action-buttons">
-    <!-- Edit -->
-    <button class="btn btn-edit" onclick="window.location='{{ route('users.edit', $user->id) }}'">
-        <i class="fa-solid fa-edit"></i>
-    </button>
+                    <!-- Edit -->
+                    <button class="btn btn-edit" onclick="window.location='{{ route('users.edit', $user->id) }}'">
+                        <i class="fa-solid fa-edit"></i>
+                    </button>
 
-    <!-- Delete -->
-    <!-- Delete button -->
-<button class="btn btn-delete" onclick="confirmDelete({{ $user->id }})">
-    <i class="fa-solid fa-trash"></i>
-</button>
+                    <!-- Delete -->
+                    <!-- Delete button -->
+                <button class="btn btn-delete" onclick="confirmDelete({{ $user->id }})">
+                    <i class="fa-solid fa-trash"></i>
+                </button>
 
-<!-- Hidden form -->
-<form id="delete-form-{{ $user->id }}" action="{{ route('users.delete', $user->id) }}" method="POST" style="display:none;">
-    @csrf
-    @method('DELETE')
-</form>
+                <!-- Hidden form -->
+                <form id="delete-form-{{ $user->id }}" action="{{ route('users.delete', $user->id) }}" method="POST" style="display:none;">
+                    @csrf
+                    @method('DELETE')
+                </form>
 
 
 
-    <!-- Detail -->
-    <button class="btn btn-detail" onclick="window.location='{{ route('users.show', $user->id) }}'">
-        <i class="fa-solid fa-info-circle"></i>
-    </button>
-</span>
+                    <!-- Detail -->
+                    <button class="btn btn-detail" onclick="window.location='{{ route('users.show', $user->id) }}'">
+                        <i class="fa-solid fa-info-circle"></i>
+                    </button>
+                </span>
 
                 </div>
                 @endforeach
@@ -94,6 +95,7 @@
             @endif
         </ul>
     </div>
+</div>
 </div>
 
 <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>

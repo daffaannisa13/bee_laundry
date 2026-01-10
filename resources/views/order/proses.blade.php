@@ -59,38 +59,43 @@
                     @else
                         <table class="table table-bordered mt-2">
                             <thead class="table-light">
-                                        <tr>
-                                            {{-- PERBAIKAN: Alignment untuk Header --}}
-                                            <th class="text-start align-middle">Service</th> 
-                                            <th class="text-center align-middle">Qty</th>
-                                            <th class="text-end align-middle">Price</th>
-                                            <th class="text-end align-middle">Total</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        @php $grand = 0; @endphp
-                                        @foreach($orderItems as $item)
-                                            @php
-                                                // Menggunakan field yang benar dari PesananLaundry
-                                                $qty = $item->jumlah ?? 0;
-                                                $harga = $item->harga_item ?? 0;
-                                                $total = $qty * $harga;
-                                                $grand += $total;
-                                            @endphp
-                                            <tr>
-                                                {{-- Data Baris --}}
-                                                <td>
-<span class="badge bg-info text-dark ms-2">
-    {{ optional($item->Item)->tipe_service ?? 'N/A' }}
-</span>
+                                <tr>
+                                    {{-- PERBAIKAN: Alignment untuk Header --}}
+                                    <th class="text-start align-middle">Service</th>
+                                    <th class="text-center align-middle">Qty</th>
+                                    <th class="text-end align-middle">Price</th>
+                                    <th class="text-end align-middle">Total</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @php $grand = 0; @endphp
+                                @foreach($orderItems as $item)
+                                    @php
+                                        // Menggunakan field yang benar dari PesananLaundry
+                                        $qty = $item->jumlah ?? 0;
+                                        $harga = $item->harga_item ?? 0;
+                                        $total = $qty * $harga;
+                                        $grand += $total;
+                                    @endphp
+                                    <tr>
+                                        <td data-label="Service">
+                                            <span class="badge bg-info text-dark">
+                                                {{ optional($item->Item)->tipe_service ?? 'N/A' }}
+                                            </span>
+                                        </td>
 
-                                                </td>
-                                                <td class="text-center align-middle">{{ $qty }}</td>
-                                                <td class="text-end align-middle">Rp {{ number_format($harga,0,',','.') }}</td>
-                                                <td class="text-end align-middle">Rp {{ number_format($total,0,',','.') }}</td>
-                                            </tr>
-                                        @endforeach
-                                    </tbody>
+                                        <td data-label="Qty" class="text-center">{{ $qty }}</td>
+
+                                        <td data-label="Price" class="text-end">
+                                            Rp {{ number_format($harga,0,',','.') }}
+                                        </td>
+
+                                        <td data-label="Total" class="text-end">
+                                            Rp {{ number_format($total,0,',','.') }}
+                                        </td>
+                                    </tr>
+                                @endforeach
+                            </tbody>
                         </table>
                     @endif
                 </div>
@@ -124,7 +129,7 @@
     }
     .table-order-details th:nth-child(1),
     .table-order-details td:nth-child(1) { /* Service column */
-        width: 45%; 
+        width: 45%;
     }
     .table-order-details th:nth-child(2),
     .table-order-details td:nth-child(2) { /* Qty column */
@@ -132,11 +137,11 @@
     }
     .table-order-details th:nth-child(3),
     .table-order-details td:nth-child(3) { /* Price column */
-        width: 22.5%; 
+        width: 22.5%;
     }
     .table-order-details th:nth-child(4),
     .table-order-details td:nth-child(4) { /* Total column */
-        width: 22.5%; 
+        width: 22.5%;
     }
 </style>
 

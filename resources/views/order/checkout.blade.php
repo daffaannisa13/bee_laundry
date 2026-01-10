@@ -4,6 +4,7 @@
 @section('body-class', 'dashboard-layout')
 
 @section('content')
+<div class="orders-page">
 <div class="main-content">
   <!-- Breadcrumb -->
   <div class="breadcrumb">
@@ -45,5 +46,6 @@
       </div>
     </div>
   </div>
+</div>
 </div>
 @endsection

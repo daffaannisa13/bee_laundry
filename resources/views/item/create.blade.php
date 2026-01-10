@@ -3,6 +3,7 @@
 @section('title', 'Tambah Layanan')
 
 @section('content')
+<div class="items-page">
 <div class="main-content">
     <div class="breadcrumb">
       <a href="{{ route('item.index') }}">Item</a> / <span>Create Item</span>
@@ -24,13 +25,13 @@
 
                 <div class="form-group">
                     <label for="nama_service">Nama Layanan</label>
-                    <input type="text" id="nama_service" name="nama_service" class="form-control" 
+                    <input type="text" id="nama_service" name="nama_service" class="form-control"
                            placeholder="Masukkan nama layanan" required>
                 </div>
 
                 <div class="form-group">
                     <label for="harga">Harga</label>
-                    <input type="number" id="harga" name="harga" class="form-control" 
+                    <input type="number" id="harga" name="harga" class="form-control"
                            placeholder="Masukkan harga" required>
                 </div>
 
@@ -45,7 +46,7 @@
 
                 <div class="form-group">
                     <label for="deskripsi">Deskripsi</label>
-                    <textarea id="deskripsi" name="deskripsi" class="form-control" rows="3" 
+                    <textarea id="deskripsi" name="deskripsi" class="form-control" rows="3"
                               placeholder="Masukkan deskripsi"></textarea>
                 </div>
 
@@ -63,6 +64,7 @@
       <div id="laundry-lottie"></div>
     </div>
   </div>
+</div>
 </div>
 
 <!-- JS Libraries -->

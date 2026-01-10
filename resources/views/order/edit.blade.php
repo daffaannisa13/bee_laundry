@@ -4,6 +4,7 @@
 @section('body-class', 'dashboard-layout')
 
 @section('content')
+<div class="orders-page">
 <div class="main-content">
   <!-- Breadcrumb -->
   <div class="breadcrumb">
@@ -21,7 +22,7 @@
       <form action="{{ route('order.update', $pesanan->id) }}" method="POST">
         @csrf
         @method('POST') {{-- Bisa juga pakai PATCH jika route mendukung --}}
-        
+
         <div class="form-group">
           <label for="status">Status</label>
           <select id="status" name="status" class="form-control" required>
@@ -39,5 +40,6 @@
       </form>
     </div>
   </div>
+</div>
 </div>
 @endsection

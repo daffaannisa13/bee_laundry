@@ -4,6 +4,7 @@
 @section('body-class', 'dashboard-layout')
 
 @section('content')
+<div class="items-page">
 <div class="main-content">
     <!-- Breadcrumb -->
     <div class="breadcrumb">
@@ -25,13 +26,13 @@
 
                 <div class="form-group">
                     <label for="nama_service">Nama Layanan</label>
-                    <input type="text" id="nama_service" name="nama_service" class="form-control" 
+                    <input type="text" id="nama_service" name="nama_service" class="form-control"
                            placeholder="Masukkan nama layanan" value="{{ $item->nama_service }}" required>
                 </div>
 
                 <div class="form-group">
                     <label for="harga">Harga</label>
-                    <input type="number" id="harga" name="harga" class="form-control" 
+                    <input type="number" id="harga" name="harga" class="form-control"
                            placeholder="Masukkan harga" value="{{ $item->harga }}" required>
                 </div>
 

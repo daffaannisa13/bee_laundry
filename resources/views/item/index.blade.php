@@ -3,6 +3,7 @@
 @section('title','Laundry Service')
 
 @section('content')
+<div class="items-page">
 <div class="main-content">
     <div class="header">Laundry Item</div>
 
@@ -86,6 +87,7 @@
             </ul>
         </div>
     </div>
+</div>
 </div>
 
 {{-- Scripts --}}

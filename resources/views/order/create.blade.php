@@ -4,6 +4,7 @@
 @section('body-class', 'dashboard-layout')
 
 @section('content')
+<div class="orders-page">
 <div class="main-content">
   <div class="breadcrumb">
       <a href="{{ route('order.index') }}">Order</a> / <span>New Order</span>
@@ -99,6 +100,7 @@
 
   </div>
 </div>
+</div>
 @endsection
 
 @push('scripts')
@@ -190,7 +192,7 @@ function renderCart(){
         `;
     });
 
-    document.getElementById("totalHargaText").textContent = 
+    document.getElementById("totalHargaText").textContent =
         "Rp " + total.toLocaleString();
 }
 </script>
