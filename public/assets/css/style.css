@@ -416,20 +416,20 @@ body.no-sidebar .content-wrapper {
   .sidebar-toggle {
     display: block;
   }
-  
+
 }
 
 /* =========================================================
    MAIN CONTAINER & DASHBOARD
    ========================================================= */
 .main-container {
-    flex: 1; 
+    flex: 1;
     margin-left: 70px;
     min-height: 100vh;
-    
+
     /* PENGATURAN FLEX VERTICAL DARI LANGKAH SEBELUMNYA */
     display: flex;
-    flex-direction: column; 
+    flex-direction: column;
 
     /* TAMBAHAN UNTUK MENGATASI RUANG KOSONG DI ATAS */
     justify-content: flex-start; /* Memaksa konten (main-content) mulai dari posisi teratas */
@@ -440,7 +440,7 @@ body.no-sidebar .content-wrapper {
     background-color: #fff;
     width: 100%;
     overflow-x: hidden;
-    
+
     /* TAMBAHAN BARU: REGANGKAN HINGGA PENUH */
     flex: 1;
 }
@@ -724,12 +724,12 @@ body.no-sidebar .content-wrapper {
   .sidebar {
     width: 50px;
   }
-  
+
   .main-container {
     margin-left: 50px;
     width: calc(100% - 50px);
   }
-  
+
   .main-content {
     padding: 20px;
   }
@@ -744,11 +744,11 @@ body.no-sidebar .content-wrapper {
     border-bottom: 1px solid #ddd;
     padding: 0;
   }
-  
+
   .sidebar-toggle {
     display: block;
   }
-  
+
   .sidebar-icons {
     display: none;
     flex-direction: column;
@@ -756,11 +756,11 @@ body.no-sidebar .content-wrapper {
     background: #fff;
     padding: 10px 0;
   }
-  
+
   .sidebar.expanded .sidebar-icons {
     display: flex;
   }
-  
+
   .sidebar .sidebar-icons i {
     margin: 15px 0;
   }
@@ -786,6 +786,13 @@ body.no-sidebar .content-wrapper {
     grid-template-columns: 1fr;
     gap: 8px;
   }
+}
+
+@media screen and (min-width: 321px) and (max-width: 425px) {
+    .settings-page .main-content {
+        padding: 20px;
+        width:100%;
+    }
 }
 
 .dashboard-admin-recent-orders {
@@ -886,7 +893,7 @@ body.no-sidebar .content-wrapper {
   box-shadow: 0 2px 8px rgba(20, 115, 230, 0.2);
   margin-top: 20px;
   display: inline-block;
-  
+
 }
 
 /* ============================
