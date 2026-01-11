@@ -6,7 +6,7 @@ use App\Models\Pesanan;
 use App\Models\PesananLaundry;
 use App\Models\Pembayaran;
 use App\Models\Item;
-use App\Models\User; 
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\DB;
@@ -18,46 +18,64 @@ class PesananController extends Controller
 {
 
     public function search(Request $request)
-{
-    $keyword = $request->search;
-    $pesanan = Pesanan::with('user')
-    ->where(function($q) use ($keyword) {
-        $q->where('nomor_invoice', 'like', "%$keyword%")
-          ->orWhereHas('user', function($u) use ($keyword) {
-              $u->where('name', 'like', "%$keyword%");
-          });
-    })
-    ->orderBy('created_at','desc')
-    ->paginate(10)
-    ->appends(['search' => $keyword]); // <--- PENTING BANGET!!
+    {
+        $keyword = $request->search;
+        $dateRange = $request->date_range;
+
+        $pesanan = Pesanan::with('user')
+            ->where(function($q) use ($keyword) {
+                if ($keyword) {
+                    $q->where('nomor_invoice', 'like', "%$keyword%")
+                    ->orWhereHas('user', function($u) use ($keyword) {
+                        $u->where('name', 'like', "%$keyword%");
+                    });
+                }
+            });
+
+        if ($dateRange) {
+            [$start, $end] = explode(' to ', $dateRange);
+
+            $pesanan->whereBetween('created_at', [
+                $start . ' 00:00:00',
+                $end . ' 23:59:59'
+            ]);
+        }
+
+        $pesanan = $pesanan
+            ->orderBy('created_at','desc')
+            ->paginate(10)
+            ->appends([
+                'search' => $keyword,
+                'date_range' => $dateRange
+            ]);
 
 
-$htmlOrders = '<div class="orders-table-container">
-    <div class="orders-table">
-        <div class="table-header">
-            <span>Order ID</span>
-            <span>Customer</span>
-            <span>Date</span>
-            <span>Status</span>
-            <span>Total</span>
-            <span>Action</span>
+    $htmlOrders = '<div class="orders-table-container">
+        <div class="orders-table">
+            <div class="table-header">
+                <span>Order ID</span>
+                <span>Customer</span>
+                <span>Date</span>
+                <span>Status</span>
+                <span>Total</span>
+                <span>Action</span>
+            </div>';
+
+    foreach($pesanan as $p){
+        $htmlOrders .= '<div class="table-row">
+            <span class="order-id">#'.($p->nomor_invoice ?? 'INV-'.$p->id).'</span>
+            <span>'.$p->user->name.'</span>
+            <span>'.$p->created_at->format('M d, Y').'</span>
+            <span><span class="status '.($p->status == 'done' ? 'completed' : ($p->status == 'processing' ? 'processing' : 'pending')).'">'.ucfirst($p->status).'</span></span>
+            <span class="total">Rp '.number_format($p->total_harga,0,',','.').'</span>
+            <span class="action-buttons">
+                <button class="btn btn-edit" onclick="window.location.href=\''.route('order.edit',$p->id).'\'"><i class="fa-solid fa-edit"></i></button>
+                <button class="btn btn-detail" onclick="window.location.href=\''.route('order.show',$p->id).'\'"><i class="fa-solid fa-info-circle"></i></button>
+            </span>
         </div>';
+    }
 
-foreach($pesanan as $p){
-    $htmlOrders .= '<div class="table-row">
-        <span class="order-id">#'.($p->nomor_invoice ?? 'INV-'.$p->id).'</span>
-        <span>'.$p->user->name.'</span>
-        <span>'.$p->created_at->format('M d, Y').'</span>
-        <span><span class="status '.($p->status == 'done' ? 'completed' : ($p->status == 'processing' ? 'processing' : 'pending')).'">'.ucfirst($p->status).'</span></span>
-        <span class="total">Rp '.number_format($p->total_harga,0,',','.').'</span>
-        <span class="action-buttons">
-            <button class="btn btn-edit" onclick="window.location.href=\''.route('order.edit',$p->id).'\'"><i class="fa-solid fa-edit"></i></button>
-            <button class="btn btn-detail" onclick="window.location.href=\''.route('order.show',$p->id).'\'"><i class="fa-solid fa-info-circle"></i></button>
-        </span>
-    </div>';
-}
-
-$htmlOrders .= '</div></div>';
+    $htmlOrders .= '</div></div>';
 
 
 
@@ -68,9 +86,9 @@ $htmlOrders .= '</div></div>';
             $htmlPagination .= '<li><a href="'.route('order.search',['page'=>$pesanan->currentPage()-1,'search'=>$keyword]).'">Prev</a></li>';
         }
         foreach ($pesanan->getUrlRange(1, $pesanan->lastPage()) as $page => $url) {
-    $active = $page == $pesanan->currentPage() ? 'active' : '';
-    $htmlPagination .= '<li class="'.$active.'"><a href="'.$url.'">'.$page.'</a></li>';
-}
+            $active = $page == $pesanan->currentPage() ? 'active' : '';
+            $htmlPagination .= '<li class="'.$active.'"><a href="'.$url.'">'.$page.'</a></li>';
+        }
         if($pesanan->hasMorePages()){
             $htmlPagination .= '<li><a href="'.route('order.search',['page'=>$pesanan->currentPage()+1,'search'=>$keyword]).'">Next</a></li>';
         } else {
@@ -141,11 +159,22 @@ public function create()
 
 
 
-    public function index()
-{
-    $pesanan = Pesanan::with('user')->orderBy('created_at', 'desc')->paginate(10);
+    public function index(Request $request)
+    {
+        $query = Pesanan::with('user')->orderBy('created_at', 'desc');
 
-    return view('order.index', compact('pesanan'));
+        if ($request->date_range) {
+            [$start, $end] = explode(' to ', $request->date_range);
+
+            $query->whereBetween('created_at', [
+                $start . ' 00:00:00',
+                $end . ' 23:59:59'
+            ]);
+        }
+
+        $pesanan = $query->paginate(10)->withQueryString();
+
+        return view('order.index', compact('pesanan'));
     }
 
 public function userOrders()
@@ -214,11 +243,21 @@ public function destroy($id)
 }
 
 
-public function exportPDF()
+public function exportPDF(Request $request)
 {
-    $pesanan = Pesanan::with(['user', 'items.Item'])
-        ->orderBy('created_at', 'desc')
-        ->get();
+    $query = Pesanan::with(['user', 'items.Item'])
+        ->orderBy('created_at', 'desc');
+
+    if ($request->date_range) {
+        [$start, $end] = explode(' to ', $request->date_range);
+
+        $query->whereBetween('created_at', [
+            $start . ' 00:00:00',
+            $end . ' 23:59:59'
+        ]);
+    }
+
+    $pesanan = $query->get();
 
     $pdf = Pdf::loadView('order.export_pdf', compact('pesanan'))
               ->setPaper('a4', 'portrait');
@@ -226,11 +265,13 @@ public function exportPDF()
     return $pdf->download('laporan_pesanan.pdf');
 }
 
-public function exportExcel()
-{
-    $pesanan = Pesanan::with(['user', 'items.Item'])->get();
 
-    return Excel::download(new PesananExport($pesanan), 'Laporan_Pesanan.xlsx');
+public function exportExcel(Request $request)
+{
+    return Excel::download(
+        new PesananExport($request->date_range),
+        'Laporan_Pesanan.xlsx'
+    );
 }
 
 }

@@ -40,8 +40,8 @@
       <div class="recent-orders">
     <h3>🛒 My Recent Orders</h3>
 
-    <div class="orders-table">
-        <div class="table-header">
+    <div class="dashboard-admin-table-container">
+        <div class="dashboard-admin-table-header">
             <span>Order No.</span>
             <span>Date</span>
             <span>Status</span>
@@ -64,20 +64,20 @@
                     default => ucfirst($order->status),
                 };
             @endphp
-            <div class="table-row">
+            <div class="dashboard-admin-table-row">
                 <span>#{{ $order->nomor_invoice ?? 'INV-'.$order->id }}</span>
                 <span>{{ $order->created_at->format('M d, Y') }}</span>
                 <span class="status {{ $statusClass }}">{{ ucfirst($order->status) }}</span>
                 <span>Rp {{ number_format($order->total_harga,0,',','.') }}</span>
             </div>
         @empty
-            <div class="table-row">
+            <div class="dashboard-admin-table-row">
                 <span colspan="4" style="text-align:center;">You have no recent orders.</span>
             </div>
         @endforelse
     </div>
 
-    <a href="{{ url('/user/orders?user_id=' . auth()->id()) }}" class="btn">View All</a>
+    <a href="{{ url('/user/orders?user_id=' . auth()->id()) }}" class="dashboard-admin-btn">View All</a>
 </div>
 
 

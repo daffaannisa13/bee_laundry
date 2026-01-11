@@ -15,6 +15,7 @@
   <!-- Custom CSS -->
   <link rel="stylesheet" href="{{ asset('assets/css/style.css') }}">
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
 </head>
 
 <body class="@yield('body-class', '')">
@@ -33,7 +34,7 @@
 
   {{-- Sidebar --}}
   @unless(Request::is('login', 'register'))
-    @include('partials.sidebar') 
+    @include('partials.sidebar')
   @endunless
 
 {{-- SweetAlert Success --}}
